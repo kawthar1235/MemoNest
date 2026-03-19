@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MemoNest</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>MemoNest</h1>
+    <p>Your memories, one day at a time</p>
+  </header>
+
+  <main class="calendar-page">
+    <section class="calendar-section">
+      <div class="calendar-topbar">
+        <button id="prevMonthBtn" class="nav-btn" type="button">←</button>
+        <h2 id="monthYear">March 2026</h2>
+        <button id="nextMonthBtn" class="nav-btn" type="button">→</button>
+      </div>
+
+      <div class="weekdays">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+      </div>
+
+      <div id="calendarGrid" class="calendar-grid">
+        <!-- الأيام تنولد بالجافاسكربت -->
+      </div>
+    </section>
+  </main>
+
+  <div id="entryModal" class="modal hidden">
+    <div class="modal-content">
+      <button id="closeModalBtn" class="close-btn" type="button">&times;</button>
+
+      <h3 id="selectedDateTitle">March 19, 2026</h3>
+
+      <form id="entryForm" class="entry-form">
+        <div class="form-group">
+          <label for="entryTitle">Title</label>
+          <input
+            type="text"
+            id="entryTitle"
+            placeholder="Add a short title..."
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="entryImage">Upload Image</label>
+          <input type="file" id="entryImage" accept="image/*" />
+        </div>
+
+        <div class="form-group">
+          <label>Your Note</label>
+
+          <div class="toolbar">
+            <button type="button" class="tool-btn" onclick="formatNote('bold')"><b>B</b></button>
+            <button type="button" class="tool-btn" onclick="formatNote('italic')"><i>I</i></button>
+            <button type="button" class="tool-btn" onclick="formatNote('underline')"><u>U</u></button>
+            <button type="button" class="tool-btn" onclick="formatNote('hiliteColor', 'yellow')">Highlight</button>
+            <button type="button" class="tool-btn" onclick="formatNote('insertUnorderedList')">• List</button>
+            <button type="button" class="tool-btn" onclick="formatNote('insertOrderedList')">1. List</button>
+            <button type="button" class="tool-btn" onclick="setNoteBlock('h1')">H1</button>
+            <button type="button" class="tool-btn" onclick="setNoteBlock('h2')">H2</button>
+            <button type="button" class="tool-btn" onclick="setNoteBlock('p')">P</button>
+          </div>
+
+          <div
+            id="entryNote"
+            class="editor"
+            contenteditable="true"
+            data-placeholder="Write something about your day..."
+          ></div>
+        </div>
+
+        <div id="imagePreviewContainer" class="image-preview-container">
+          <img id="imagePreview" src="" alt="Preview" />
+        </div>
+
+        <div class="modal-actions">
+          <button type="submit" class="save-btn">Save Entry</button>
+          <button type="button" id="deleteEntryBtn" class="delete-btn">Delete Entry</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
