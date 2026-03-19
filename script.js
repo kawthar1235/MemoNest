@@ -6,13 +6,27 @@ const nextMonthBtn = document.getElementById("nextMonthBtn");
 const entryModal = document.getElementById("entryModal");
 const closeModalBtn = document.getElementById("closeModalBtn");
 const selectedDateTitle = document.getElementById("selectedDateTitle");
+
+const entryView = document.getElementById("entryView");
+const viewTitle = document.getElementById("viewTitle");
+const viewImage = document.getElementById("viewImage");
+const viewImageContainer = document.getElementById("viewImageContainer");
+const viewNote = document.getElementById("viewNote");
+const editEntryBtn = document.getElementById("editEntryBtn");
+const deleteEntryBtn = document.getElementById("deleteEntryBtn");
+
 const entryForm = document.getElementById("entryForm");
 const entryTitle = document.getElementById("entryTitle");
 const entryImage = document.getElementById("entryImage");
 const entryNote = document.getElementById("entryNote");
-const deleteEntryBtn = document.getElementById("deleteEntryBtn");
 const imagePreview = document.getElementById("imagePreview");
 const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+
+const heroGallery = document.getElementById("heroGallery");
+const openCalendarBtn = document.getElementById("openCalendarBtn");
+const openUploadBtn = document.getElementById("openUploadBtn");
+const calendarSection = document.getElementById("calendarSection");
+const fallingPhotos = document.getElementById("fallingPhotos");
 
 let currentDate = new Date();
 let selectedDateKey = "";
@@ -21,6 +35,7 @@ let selectedImageData = "";
 let entries = JSON.parse(localStorage.getItem("memoNestEntries")) || {};
 
 renderCalendar();
+renderHeroGallery();
 
 prevMonthBtn.addEventListener("click", function () {
   currentDate.setMonth(currentDate.getMonth() - 1);
@@ -32,6 +47,15 @@ nextMonthBtn.addEventListener("click", function () {
   renderCalendar();
 });
 
+openCalendarBtn.addEventListener("click", function () {
+  calendarSection.scrollIntoView({ behavior: "smooth" });
+});
+
+openUploadBtn.addEventListener("click", function () {
+  const today = new Date();
+  openModal(today);
+});
+
 closeModalBtn.addEventListener("click", closeModal);
 
 entryModal.addEventListener("click", function (e) {
@@ -40,9 +64,12 @@ entryModal.addEventListener("click", function (e) {
   }
 });
 
+editEntryBtn.addEventListener("click", function () {
+  showEditMode();
+});
+
 entryImage.addEventListener("change", function () {
   const file = entryImage.files[0];
-
   if (!file) return;
 
   const reader = new FileReader();
@@ -58,7 +85,9 @@ entryImage.addEventListener("change", function () {
 entryForm.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  const title = entryTitle.value.trim();
+  let title = entryTitle.value.trim();
+  title = title ? title.split(/\s+/)[0] : "";
+
   const note = entryNote.innerHTML.trim();
 
   if (!title && !selectedImageData && !note) {
@@ -75,6 +104,7 @@ entryForm.addEventListener("submit", function (e) {
   saveEntries();
   closeModal();
   renderCalendar();
+  renderHeroGallery();
 });
 
 deleteEntryBtn.addEventListener("click", function () {
@@ -87,7 +117,30 @@ deleteEntryBtn.addEventListener("click", function () {
   saveEntries();
   closeModal();
   renderCalendar();
+  renderHeroGallery();
 });
+
+function renderHeroGallery() {
+  const allEntries = Object.values(entries).filter((entry) => entry.image);
+
+  fallingPhotos.innerHTML = "";
+
+  if (allEntries.length === 0) return;
+
+  const fallingList = allEntries.slice(-10).reverse();
+
+  fallingList.forEach((entry) => {
+    const img = document.createElement("img");
+    img.classList.add("falling-photo");
+    img.src = entry.image;
+
+    img.style.left = `${Math.random() * 85}%`;
+    img.style.animationDuration = `${9 + Math.random() * 5}s, ${3 + Math.random() * 2}s`;
+    img.style.animationDelay = `${Math.random() * 4}s, ${Math.random() * 2}s`;
+
+    fallingPhotos.appendChild(img);
+  });
+}
 
 function renderCalendar() {
   calendarGrid.innerHTML = "";
@@ -130,31 +183,30 @@ function renderCalendar() {
       dayCell.classList.add("has-entry");
     }
 
-    const dayNumber = document.createElement("div");
+    const topRow = document.createElement("div");
+    topRow.classList.add("day-top");
+
+    const dayNumber = document.createElement("span");
     dayNumber.classList.add("day-number");
     dayNumber.textContent = day;
-    dayCell.appendChild(dayNumber);
+    topRow.appendChild(dayNumber);
 
-   if (entries[dateKey]) {
-  const entry = entries[dateKey];
+    if (entries[dateKey] && entries[dateKey].title) {
+      const titlePreview = document.createElement("span");
+      titlePreview.classList.add("day-title");
+      titlePreview.textContent = entries[dateKey].title.split(/\s+/)[0];
+      topRow.appendChild(titlePreview);
+    }
 
-  // التايتل
-  if (entry.title) {
-    const titlePreview = document.createElement("div");
-    titlePreview.classList.add("day-title");
-    titlePreview.textContent = entry.title;
-    dayCell.appendChild(titlePreview);
-  }
+    dayCell.appendChild(topRow);
 
-
-  if (entry.image) {
-    const img = document.createElement("img");
-    img.classList.add("day-image");
-    img.src = entry.image;
-    img.alt = "Memory";
-    dayCell.appendChild(img);
-  }
-}
+    if (entries[dateKey] && entries[dateKey].image) {
+      const img = document.createElement("img");
+      img.classList.add("day-image");
+      img.src = entries[dateKey].image;
+      img.alt = "Memory";
+      dayCell.appendChild(img);
+    }
 
     dayCell.addEventListener("click", function () {
       openModal(dateObj);
@@ -177,6 +229,39 @@ function openModal(dateObj) {
   const existingEntry = entries[selectedDateKey];
 
   if (existingEntry) {
+    showViewMode(existingEntry);
+  } else {
+    prepareEmptyForm();
+    showEditMode();
+  }
+
+  entryModal.classList.remove("hidden");
+}
+
+function showViewMode(entry) {
+  entryView.classList.remove("hidden");
+  entryForm.classList.add("hidden");
+
+  viewTitle.textContent = entry.title || "Untitled";
+
+  if (entry.image) {
+    viewImage.src = entry.image;
+    viewImageContainer.classList.remove("hidden");
+  } else {
+    viewImage.src = "";
+    viewImageContainer.classList.add("hidden");
+  }
+
+  viewNote.innerHTML = entry.note || "<p>No note for this day.</p>";
+}
+
+function showEditMode() {
+  entryView.classList.add("hidden");
+  entryForm.classList.remove("hidden");
+
+  const existingEntry = entries[selectedDateKey];
+
+  if (existingEntry) {
     entryTitle.value = existingEntry.title || "";
     entryNote.innerHTML = existingEntry.note || "";
     selectedImageData = existingEntry.image || "";
@@ -187,23 +272,29 @@ function openModal(dateObj) {
       hidePreview();
     }
   } else {
-    entryTitle.value = "";
-    entryNote.innerHTML = "";
-    selectedImageData = "";
-    entryImage.value = "";
-    hidePreview();
+    prepareEmptyForm();
   }
 
-  entryModal.classList.remove("hidden");
+  entryImage.value = "";
+}
+
+function prepareEmptyForm() {
+  entryTitle.value = "";
+  entryNote.innerHTML = "";
+  selectedImageData = "";
+  entryImage.value = "";
+  hidePreview();
 }
 
 function closeModal() {
   entryModal.classList.add("hidden");
-  entryForm.reset();
-  entryTitle.value = "";
-  entryNote.innerHTML = "";
-  entryImage.value = "";
-  hidePreview();
+  entryView.classList.add("hidden");
+  entryForm.classList.remove("hidden");
+  prepareEmptyForm();
+  viewTitle.textContent = "";
+  viewImage.src = "";
+  viewImageContainer.classList.add("hidden");
+  viewNote.innerHTML = "";
 }
 
 function showPreview(src) {

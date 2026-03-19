@@ -7,12 +7,28 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="header">
-    <h1>MemoNest</h1>
-    <p>Your memories, one day at a time</p>
-  </header>
+    <div id="fallingPhotos" class="falling-photos"></div>
+  <!-- Landing Page -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <p class="hero-label">Digital Memory Journal</p>
+      <h1>MemoNest</h1>
+      <p class="hero-text">
+        Keep your days, photos, and little memories in one cozy place.
+      </p>
 
-  <main class="calendar-page">
+      <div class="hero-visual">
+  <div id="fallingPhotos" class="falling-photos"></div>
+
+      <div class="hero-buttons">
+        <button id="openUploadBtn" class="save-btn" type="button">Upload Memory</button>
+        <button id="openCalendarBtn" class="secondary-btn" type="button">Open Calendar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calendar -->
+  <main id="calendarSection" class="calendar-page">
     <section class="calendar-section">
       <div class="calendar-topbar">
         <button id="prevMonthBtn" class="nav-btn" type="button">←</button>
@@ -30,25 +46,41 @@
         <div>Sat</div>
       </div>
 
-      <div id="calendarGrid" class="calendar-grid">
-        <!-- الأيام تنولد بالجافاسكربت -->
-      </div>
+      <div id="calendarGrid" class="calendar-grid"></div>
     </section>
   </main>
 
+  <!-- Modal -->
   <div id="entryModal" class="modal hidden">
     <div class="modal-content">
       <button id="closeModalBtn" class="close-btn" type="button">&times;</button>
 
       <h3 id="selectedDateTitle">March 19, 2026</h3>
 
+      <!-- View Mode -->
+      <div id="entryView" class="entry-view hidden">
+        <h4 id="viewTitle" class="view-title"></h4>
+
+        <div id="viewImageContainer" class="view-image-container hidden">
+          <img id="viewImage" src="" alt="Saved image" />
+        </div>
+
+        <div id="viewNote" class="view-note"></div>
+
+        <div class="modal-actions">
+          <button type="button" id="editEntryBtn" class="save-btn">Edit</button>
+          <button type="button" id="deleteEntryBtn" class="delete-btn">Delete</button>
+        </div>
+      </div>
+
+      <!-- Edit/Add Mode -->
       <form id="entryForm" class="entry-form">
         <div class="form-group">
           <label for="entryTitle">Title</label>
           <input
             type="text"
             id="entryTitle"
-            placeholder="Add a short title..."
+            placeholder="Add one short word..."
           />
         </div>
 
@@ -70,6 +102,9 @@
             <button type="button" class="tool-btn" onclick="setNoteBlock('h1')">H1</button>
             <button type="button" class="tool-btn" onclick="setNoteBlock('h2')">H2</button>
             <button type="button" class="tool-btn" onclick="setNoteBlock('p')">P</button>
+            <button type="button" class="tool-btn" onclick="formatNote('justifyLeft')">Left</button>
+            <button type="button" class="tool-btn" onclick="formatNote('justifyCenter')">Center</button>
+            <button type="button" class="tool-btn" onclick="formatNote('justifyRight')">Right</button>
           </div>
 
           <div
@@ -86,7 +121,6 @@
 
         <div class="modal-actions">
           <button type="submit" class="save-btn">Save Entry</button>
-          <button type="button" id="deleteEntryBtn" class="delete-btn">Delete Entry</button>
         </div>
       </form>
     </div>
