@@ -7,8 +7,6 @@
   --text-muted: #8a7680;
 
   --white: #ffffff;
-  --border-light: rgba(193, 142, 178, 0.18);
-  --shadow-soft: 0 10px 25px rgba(193, 142, 178, 0.14);
   --shadow-hover: 0 16px 30px rgba(193, 142, 178, 0.18);
 }
 
@@ -28,13 +26,38 @@ body {
   color: var(--text-dark);
 }
 
-/* hero */
+.year-banner {
+  width: 100%;
+  text-align: center;
+  padding: 24px 0 6px;
+  position: relative;
+  z-index: 5;
+}
+
+.top-label {
+  font-size: 0.95rem;
+  color: #8a7680;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.big-year {
+  font-size: clamp(4rem, 11vw, 7rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -3px;
+  margin: 0;
+  background: linear-gradient(135deg, #c18eb2, #e9c484);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .hero-section {
-  min-height: 100vh;
+  min-height: calc(100vh - 120px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px 24px;
+  padding: 20px 20px 24px;
   position: relative;
   overflow: hidden;
 }
@@ -47,28 +70,11 @@ body {
   animation: fadeUp 1s ease;
 }
 
-.hero-label {
-  display: inline-block;
-  font-size: 0.9rem;
+.site-name {
+  font-size: 1.9rem;
   color: var(--primary);
-  background: rgba(193, 142, 178, 0.12);
-  padding: 8px 14px;
-  border-radius: 999px;
-  margin-bottom: 16px;
-  font-weight: 700;
-  animation: softPop 0.8s ease;
-}
-
-.hero-content h1,
-.header h1 {
-  color: var(--primary);
-}
-
-.hero-content h1 {
-  font-size: clamp(3rem, 8vw, 5rem);
-  margin-bottom: 10px;
-  letter-spacing: -2px;
-  animation: fadeUp 1s ease 0.1s both;
+  margin-bottom: 12px;
+  font-weight: 800;
 }
 
 .hero-text {
@@ -80,6 +86,12 @@ body {
   animation: fadeUp 1s ease 0.2s both;
 }
 
+.hero-visual {
+  position: relative;
+  min-height: 320px;
+  margin: 28px auto 30px;
+}
+
 .hero-buttons {
   display: flex;
   gap: 14px;
@@ -88,25 +100,6 @@ body {
   animation: fadeUp 1s ease 0.35s both;
 }
 
-/* header */
-.header {
-  text-align: center;
-  padding: 36px 20px 24px;
-}
-
-.header h1 {
-  font-size: 2.7rem;
-  font-weight: 800;
-  letter-spacing: -1px;
-  margin-bottom: 8px;
-}
-
-.header p {
-  font-size: 1rem;
-  color: var(--text-muted);
-}
-
-/* buttons */
 .save-btn,
 .delete-btn,
 .secondary-btn,
@@ -162,7 +155,6 @@ body {
   background: #ffe4e7;
 }
 
-/* calendar */
 .calendar-page {
   width: min(1200px, 92%);
   margin: 0 auto 40px;
@@ -318,7 +310,6 @@ body {
   box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08);
 }
 
-/* modal */
 .modal {
   position: fixed;
   inset: 0;
@@ -418,7 +409,6 @@ body {
   padding-inline-start: 22px;
 }
 
-/* form */
 .entry-form {
   display: flex;
   flex-direction: column;
@@ -455,7 +445,6 @@ body {
   box-shadow: 0 0 0 4px rgba(193, 142, 178, 0.12);
 }
 
-/* toolbar */
 .toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -478,7 +467,6 @@ body {
   background: rgba(233, 196, 132, 0.14);
 }
 
-/* editor */
 .editor {
   min-height: 200px;
   padding: 16px;
@@ -518,7 +506,6 @@ body {
   padding-inline-start: 22px;
 }
 
-/* preview */
 .image-preview-container {
   display: none;
 }
@@ -542,7 +529,6 @@ body {
   gap: 12px;
 }
 
-/* falling photos */
 .falling-photos {
   position: fixed;
   inset: 0;
@@ -574,7 +560,6 @@ body {
   margin: 28px auto 30px;
 }
 
-/* animations */
 @keyframes fadeUp {
   from {
     opacity: 0;
@@ -583,17 +568,6 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes softPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.85);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
   }
 }
 
@@ -652,7 +626,6 @@ body {
   }
 }
 
-/* responsive */
 @media (max-width: 900px) {
   .calendar-grid,
   .weekdays {
@@ -671,10 +644,6 @@ body {
 }
 
 @media (max-width: 700px) {
-  .header h1 {
-    font-size: 2.2rem;
-  }
-
   .calendar-section {
     padding: 16px;
     border-radius: 24px;
@@ -724,4 +693,16 @@ body {
   .editor {
     min-height: 170px;
   }
+
+  .big-year {
+    font-size: clamp(3.2rem, 14vw, 5rem);
+  }
+
+ .site-name {
+  font-size: clamp(2.5rem, 6vw, 4rem); 
+  color: var(--primary);
+  margin-bottom: 14px;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
 }

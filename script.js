@@ -1,3 +1,4 @@
+const yearDisplay = document.getElementById("yearDisplay");
 const monthYear = document.getElementById("monthYear");
 const calendarGrid = document.getElementById("calendarGrid");
 const prevMonthBtn = document.getElementById("prevMonthBtn");
@@ -22,11 +23,10 @@ const entryNote = document.getElementById("entryNote");
 const imagePreview = document.getElementById("imagePreview");
 const imagePreviewContainer = document.getElementById("imagePreviewContainer");
 
-const heroGallery = document.getElementById("heroGallery");
+const fallingPhotos = document.getElementById("fallingPhotos");
 const openCalendarBtn = document.getElementById("openCalendarBtn");
 const openUploadBtn = document.getElementById("openUploadBtn");
 const calendarSection = document.getElementById("calendarSection");
-const fallingPhotos = document.getElementById("fallingPhotos");
 
 let currentDate = new Date();
 let selectedDateKey = "";
@@ -34,8 +34,10 @@ let selectedImageData = "";
 
 let entries = JSON.parse(localStorage.getItem("memoNestEntries")) || {};
 
+yearDisplay.textContent = new Date().getFullYear();
+
 renderCalendar();
-renderHeroGallery();
+renderFallingPhotos();
 
 prevMonthBtn.addEventListener("click", function () {
   currentDate.setMonth(currentDate.getMonth() - 1);
@@ -104,7 +106,7 @@ entryForm.addEventListener("submit", function (e) {
   saveEntries();
   closeModal();
   renderCalendar();
-  renderHeroGallery();
+  renderFallingPhotos();
 });
 
 deleteEntryBtn.addEventListener("click", function () {
@@ -117,10 +119,10 @@ deleteEntryBtn.addEventListener("click", function () {
   saveEntries();
   closeModal();
   renderCalendar();
-  renderHeroGallery();
+  renderFallingPhotos();
 });
 
-function renderHeroGallery() {
+function renderFallingPhotos() {
   const allEntries = Object.values(entries).filter((entry) => entry.image);
 
   fallingPhotos.innerHTML = "";
@@ -133,6 +135,7 @@ function renderHeroGallery() {
     const img = document.createElement("img");
     img.classList.add("falling-photo");
     img.src = entry.image;
+    img.alt = "Falling memory";
 
     img.style.left = `${Math.random() * 85}%`;
     img.style.animationDuration = `${9 + Math.random() * 5}s, ${3 + Math.random() * 2}s`;
