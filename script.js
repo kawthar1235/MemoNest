@@ -330,3 +330,14 @@ function setNoteBlock(tag) {
   entryNote.focus();
   document.execCommand("formatBlock", false, tag);
 }
+
+const backToTopBtn = document.getElementById("backToTopBtn");
+
+if (backToTopBtn) {
+  backToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+}
