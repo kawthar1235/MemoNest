@@ -42,43 +42,51 @@ It combines a clean Apple-inspired interface with interactive features like a ca
 - LocalStorage (for data persistence)
 
 ---
-md
-🚀 How to Run
+## 🧪 Example Use Case
 
-Download or clone the repository:
+- Click on a day in the calendar  
+- Add a title, note, and image  
+- Save your memory  
+- View it anytime by clicking the same date  
 
-git clone https://github.com/your-username/MemoNest.git
-Open the project folder.
-Double-click index.html
-or open it using Live Server in VS Code.
-🧪 Example Use Case
-Click on a day in the calendar
-Add a title, note, and image
-Save your memory
-View it anytime by clicking the same date
-🎯 Project Goals
-Practice front-end development using HTML, CSS, and JavaScript
-Build an interactive UI with real user functionality
-Apply design principles (spacing, typography, color systems)
-Create a portfolio-ready project
-🔮 Future Improvements
-Dark mode 🌙
-User authentication (login system)
-Cloud storage (save memories online)
-Notifications or reminders
-Search and filter memories
-👩‍💻 Author
+---
 
-Kawthar Alkhawajah
-Software Engineering Student @ KFUPM
+## 🎯 Project Goals
 
-GitHub: https://github.com/kawthar1235
-💬 Final Note
+- Practice front-end development using HTML, CSS, and JavaScript  
+- Build an interactive UI with real user functionality  
+- Apply design principles (spacing, typography, color systems)  
+- Create a portfolio-ready project  
 
-MemoNest is more than just a project —
+---
+
+## 🔮 Future Improvements
+
+- Dark mode 🌙  
+- User authentication (login system)  
+- Cloud storage (save memories online)  
+- Notifications or reminders  
+- Search and filter memories  
+
+---
+
+## 👩‍💻 Author
+
+**Kawthar Alkhawajah**  
+Software Engineering Student @ KFUPM  
+
+- GitHub: https://github.com/kawthar1235  
+
+---
+
+## 💬 Final Note
+
+MemoNest is more than just a project —  
 it’s a space to store moments, feelings, and memories that matter.
 
-“Every day holds something worth remembering.”
+> “Every day holds something worth remembering.”
+
+---
 
 ## 📁 Project Structure
 
