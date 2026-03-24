@@ -76,7 +76,7 @@ It combines a clean Apple-inspired interface with interactive features like a ca
 Software Engineering Student @ KFUPM  
 
 - GitHub: https://github.com/kawthar1235  
-
+- live website : https://kawthar1235.github.io/MemoNest/
 ---
 
 ## 💬 Final Note
